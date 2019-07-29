@@ -11,7 +11,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("using device: ",device)
 
 def train(envs, policy, critic, episode, lr_act=2e-4, lr_crit=2e-4, discount=.99, lmda=0.95,
-          epsilon=0.2, SGD_epoch=4, batch_size=64):
+          epsilon=0.2, SGD_epoch=6, batch_size=64):
     
     widget = ['training loop: ', pb.Percentage(), ' ', pb.Bar(), ' ', pb.ETA() ]
     timer = pb.ProgressBar(widgets=widget, maxval=episode).start()
