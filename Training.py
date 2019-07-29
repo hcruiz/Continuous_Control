@@ -11,7 +11,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("using device: ",device)
 
 def train(envs, policy, critic, episode, lr_act=2e-4, lr_crit=2e-4, discount=.99, lmda=0.95,
-          epsilon=0.2, SGD_epoch=10, batch_size=64):
+          epsilon=0.2, SGD_epoch=4, batch_size=64):
     
     widget = ['training loop: ', pb.Percentage(), ' ', pb.Bar(), ' ', pb.ETA() ]
     timer = pb.ProgressBar(widgets=widget, maxval=episode).start()
@@ -30,7 +30,7 @@ def train(envs, policy, critic, episode, lr_act=2e-4, lr_crit=2e-4, discount=.99
         # collect trajectories
         States, LogPs, Actions, Rewards, Vs, scores = get_samples(envs, policy, critic)
         # return estimation 
-        returns_estimation = norm_returns(Rewards, discount)
+        returns_estimation = discounted_returns(Rewards, discount)
         #get advantage estimation
         advantage = advantage_estimate(Rewards, discount, Vs, lmda)
         #normalize advantage
@@ -71,8 +71,7 @@ def train(envs, policy, critic, episode, lr_act=2e-4, lr_crit=2e-4, discount=.99
             critic_loss = Lcritic(critic, States, returns_estimation)  
             ploss.append(policy_loss.data)
             closs.append(critic_loss.data)
-                
-            #print(policy_loss.data)
+
         # the clipping parameter reduces as time goes on
         epsilon*=.999
 
@@ -82,9 +81,12 @@ def train(envs, policy, critic, episode, lr_act=2e-4, lr_crit=2e-4, discount=.99
         scores_window.append(score)       # save most recent score
 
         # display some progress every 5 iterations
-        if (e+1)%5 == 0 :
+        if (e+1)%20 == 0 :
             print("Episode: {0:d}, score (averaged over agents): {1:f}".format(e+1,np.mean(total_rewards)))
             print("Policy loss: {} | Critic loss: {}".format(policy_loss.data,critic_loss.data))
+            print("Clipping threshold: {}".format(epsilon/0.999))
+            torch.save(policy.state_dict(), 'Reacher-ckpt.policy')
+            torch.save(critic.state_dict(), 'Reacher-ckpt.critic')
         # update progress widget bar
         timer.update(e+1)
         # check if environment is solved and save
@@ -139,7 +141,7 @@ def get_samples(env, policy, critic, train_mode=True):
     Vs = np.squeeze(np.asarray(Vs))
     return States, LogPs, Actions, Rewards, Vs, scores
 
-def norm_returns(rewards, discount):
+def discounted_returns(rewards, discount):
     discouted_rewards =  np.asarray([rewards[i]*discount**i for i in range(len(rewards))],dtype=np.float32)
     #convert to future rewards
     future_rewards = np.cumsum(discouted_rewards[::-1],axis=0)[::-1]
