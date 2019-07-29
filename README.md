@@ -29,4 +29,8 @@ using CUDA, please make sure you install the proper PyTorch version found [here]
 
 ## Instructions
 
-The code is structured as follows. 
+The code is structured as follows. There are two modules [ACnets.py](https://github.com/hcruiz/Continuous_Control/blob/master/ACnets.py) and [Training.py](https://github.com/hcruiz/Continuous_Control/blob/master/Training.py) containing all the necessary functions and classes. 
+As the name suggest, ACnets contains the Actor and the Critic network classes. The Actor class, called Policy, is a stochastic policy that uses a neural network to estimate the mean of a Gaussian and then samples from this to return an action. Additionally, it returns the log-probability value of that action. 
+The Training module contains the rest of the functions needed for training, e.g. the loss functions (for actor and critic), the training function and other helper functions like get_samples.
+The user should open the jupyter notebook [Continuous_Control.ipynb](https://github.com/hcruiz/Continuous_Control/blob/master/Continuous_Control.ipynb) and simply run all cells to start training. 
+For details on the implementation and the results, please have a look at the [Report]()
