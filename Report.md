@@ -1,9 +1,9 @@
-#Report for Unity's Reacher training using Actor-Critic RL Control
+# Report for Unity's Reacher training using Actor-Critic RL Control
 
-##Learning Algorithm
+## Learning Algorithm
 
-###Parameters
+### Parameters
 
-##Results
+## Results
 
-##Future Work
+## Future Work
