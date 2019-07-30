@@ -7,6 +7,7 @@ The [environment](https://www.youtube.com/watch?v=2N9EoF6pQyE&feature=youtu.be) 
 The observation space is a 33-dimensional space describing the position, rotation, velocity, and angular velocities of the arm. the action-space is 4-dimensional, corresponding to the torques applied to each of the two joints. The element in the action vector is limited to the interval between -1 and 1.
 Moreover, the environment consists of 20 independent, non-interacting but identical agents, i.e. the environment samples 20 copies of the same agent in parallel. This is useful for algorithms like PPO, A3C, and D4PG that require multiple samples for each learning step.
 The environment is considered solved when the average score (total reward) over the 20 agents and over 100 consecutive episodes is larger or equal +30.
+
 __NOTE__: The environment ends it's episode after 1000 time steps, i.e. the maximum toral reward achievable is less than 100. 
 
 ## Getting Started
@@ -15,8 +16,9 @@ First, install Anaconda (python 3) and clone/download this repository (from term
 
 `conda env create -f environment.yml`
 
-This environment is based on the environment provided by Udacity for this project, with the addition of the specific [PyTorch](https://pytorch.org/) 
-version that I required and the Unity environment. To activate the environment run `conda activate drlnd` and verify that the environment is installed correctly using `conda list`.
+where *environment.yml* is either `drlnd_Win64.yml` or `drlnd_ubuntu18.yml`. This environment is based on the environment provided by Udacity for this project, with the addition of the specific [PyTorch](https://pytorch.org/) version that I required and the Unity environment. To activate the environment run `conda activate drlnd` and verify that the environment is installed correctly using `conda list`.
+
+__NOTE__: I was able to run on both my machines; however, there might be compatibility issues with yours, so make sure you have the proper environment set up.
 
 Finally, you have to download the Reacher Unity environment. There are different versions depending on your operating system, so please make sure you have the correct version of the environment. The files of the environment must be placed in the repository directory or, if 
 placed somewhere else, the initialization of the environment in the notebook must contain the path to the environment.
