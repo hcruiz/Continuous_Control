@@ -23,7 +23,7 @@ __NOTE__: I was able to run on both my machines; however, there might be compati
 Finally, you have to download the Reacher Unity environment. There are different versions depending on your operating system, so please make sure you have the correct version of the environment. The files of the environment must be placed in the repository directory or, if 
 placed somewhere else, the initialization of the environment in the notebook must contain the path to the environment.
 
-__NOTE:__ The torch version in this environment assumes Windows 10 and __no CUDA__ installation. If you want to run the neural networks using CUDA, please make sure you install the proper PyTorch version found [here](https://pytorch.org/get-started/locally/). 
+__NOTE:__ The torch version in this environment assumes Windows 10 and __no CUDA__ installation. If you want to run the neural networks using CUDA, please make sure you install the proper PyTorch version found [here](https://pytorch.org/get-started/locally/) or try the environment `drlnd_ubuntu18.yml` (with CUDA 10.0). 
 
 ## Instructions
 
